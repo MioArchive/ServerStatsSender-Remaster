@@ -12,13 +12,15 @@ import net.dv8tion.jda.api.entities.Activity
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.configuration.file.FileConfiguration
+import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
+import java.io.File
 
 
 class Main : JavaPlugin(), CommandExecutor {
 
     private lateinit var jda: JDA
-
 
 
 
@@ -33,6 +35,7 @@ class Main : JavaPlugin(), CommandExecutor {
         //runnable invoke means uses code () -> Unit
 
     override fun onEnable() {
+        getCommand("sssreload")?.setExecutor(this)
         plugin = this
         val cmdName = config.getString("cmdNameForDiscord")
         val repeat = config.getBoolean("repeat")
@@ -84,5 +87,10 @@ class Main : JavaPlugin(), CommandExecutor {
         println("successfully started")
     }
 
+    fun onCommand(sender: CommandSender) {
+    if (sender.hasPermission("sss.access"))
+        reloadConfig()
+        sender.sendMessage("successfully reloaded config")
+    }
 
 }
