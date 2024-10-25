@@ -25,12 +25,12 @@ Default time is set to 10 mins for repeat function..
 REMASTER:
 
 Now with more config then ever to enhance the user experience
-Embed ✔️
-Img ✔️
-discordCustomCmd ✔️
-time ✔️
-customChannel ✔️
-Repeat ✔️
+- Embed ✔️
+- Img ✔️
+- discordCustomCmd ✔️
+- time ✔️
+- customChannel ✔️
+- Repeat ✔️
 
 and More!
 
