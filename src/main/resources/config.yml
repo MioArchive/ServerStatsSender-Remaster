@@ -1,0 +1,11 @@
+chanid: ""
+#channel id for bot make sure has perms
+token: ""
+#bot token duh
+time: 12000
+#in tics 12000 is 10 min
+repeat: true
+#this is a boolean write false if you want to make it just a /command instead of repeating the send every so on ticks
+embed: true
+embedCmd: true
+embedTitle: "Stats"

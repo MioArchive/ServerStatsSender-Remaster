@@ -8,6 +8,7 @@ version = "1.0"
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") {
         name = "spigotmc-repo"
     }
@@ -19,8 +20,12 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-}
+    implementation("net.dv8tion:JDA:5.1.2") { // replace $version with the latest version
+    compileOnly("me.lucko:spark-api:0.1-SNAPSHOT")
 
+
+    }
+}
 val targetJavaVersion = 17
 kotlin {
     jvmToolchain(targetJavaVersion)
