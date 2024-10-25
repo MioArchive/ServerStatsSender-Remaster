@@ -15,6 +15,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
+import java.awt.Color
 import java.io.File
 
 
@@ -41,6 +42,7 @@ class Main : JavaPlugin(), CommandExecutor {
         val repeat = config.getBoolean("repeat")
         val time = config.getInt("time").toLong()
         val spark = SparkProvider.get()
+        val imageURL = Main.plugin.config.getString("imgURL")
         val tps: DoubleStatistic<StatisticWindow.TicksPerSecond>? = spark.tps()
         val tpsLast10Secs = tps?.poll(StatisticWindow.TicksPerSecond.SECONDS_10)
         val tpsLast5Mins = tps?.poll(StatisticWindow.TicksPerSecond.MINUTES_5)
@@ -67,13 +69,15 @@ class Main : JavaPlugin(), CommandExecutor {
                 val chanId = config.getString("chanid")
                 if (chanId != null && embed) {
                     embedBuilder.setTitle(embedTitle)
-                    jda.getTextChannelById(chanId)?.sendMessage("TPS: $tpsLast10Secs, $tpsLast5Mins\nCPU Usage: $usageLastMin$msptString")?.setEmbeds()?.queue()
+                    embedBuilder.setColor(Color.BLACK)
+                    embedBuilder.setImage(imageURL)
+                    embedBuilder.addField("Statistics:", "TPS: $tpsLast10Secs, Last 5 minutes: $tpsLast5Mins\nCPU Usage Last Min: $usageLastMin%$msptString", false)
+                    jda.getTextChannelById(chanId)?.sendMessageEmbeds(embedBuilder.build())?.queue()
                 } /*else {
                     if (chanId != null && !embed) {
                         jda.getTextChannelById(chanId)?.sendMessage("TPS: $tpsLast10Secs, $tpsLast5Mins\nCPU Usage: $usageLastMin$msptString")?.queue()
                     }
                 }*/
-
             }
         }
 
