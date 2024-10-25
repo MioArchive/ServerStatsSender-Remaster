@@ -2,6 +2,7 @@ package com.lent.serverstatssender
 
 import me.lucko.spark.api.SparkProvider
 import me.lucko.spark.api.statistic.StatisticWindow
+import me.lucko.spark.api.statistic.StatisticWindow.TicksPerSecond
 import me.lucko.spark.api.statistic.misc.DoubleAverageInfo
 import me.lucko.spark.api.statistic.types.DoubleStatistic
 import me.lucko.spark.api.statistic.types.GenericStatistic
@@ -17,6 +18,7 @@ import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import java.awt.Color
 import java.io.File
+import kotlin.math.roundToInt
 
 
 class Main : JavaPlugin(), CommandExecutor {
@@ -38,16 +40,17 @@ class Main : JavaPlugin(), CommandExecutor {
     override fun onEnable() {
         getCommand("sssreload")?.setExecutor(this)
         plugin = this
+
         val cmdName = config.getString("cmdNameForDiscord")
         val repeat = config.getBoolean("repeat")
         val time = config.getInt("time").toLong()
         val spark = SparkProvider.get()
         val imageURL = Main.plugin.config.getString("imgURL")
         val tps: DoubleStatistic<StatisticWindow.TicksPerSecond>? = spark.tps()
-        val tpsLast10Secs = tps?.poll(StatisticWindow.TicksPerSecond.SECONDS_10)
-        val tpsLast5Mins = tps?.poll(StatisticWindow.TicksPerSecond.MINUTES_5)
+        val tpsLast10Secs = tps!!.poll(TicksPerSecond.SECONDS_10).roundToInt()
+        val tpsLast5Mins = tps.poll(TicksPerSecond.MINUTES_5).roundToInt()
         val cpuUsage: DoubleStatistic<StatisticWindow.CpuUsage> = spark.cpuSystem()
-        val usageLastMin = cpuUsage.poll(StatisticWindow.CpuUsage.MINUTES_1)
+        val usageLastMin = cpuUsage.poll(StatisticWindow.CpuUsage.MINUTES_1).roundToInt()
         val mspt: GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick>? = spark.mspt()
         var msptString = ""
 
@@ -60,8 +63,8 @@ class Main : JavaPlugin(), CommandExecutor {
         scheduleTimer(time) {
             if (repeat) {
                 mspt?.poll(StatisticWindow.MillisPerTick.MINUTES_1)?.let { msptLastMin ->
-                    val msptMean = msptLastMin.mean()
-                    val mspt95Percentile = msptLastMin.percentile95th()
+                    val msptMean = msptLastMin.percentile95th().roundToInt()
+                    val mspt95Percentile = msptLastMin.percentile95th().roundToInt()
                     msptString = "\nMsptMean Usage: $msptMean\nmspt95Percentile: $mspt95Percentile"
                 }
                 config.options().copyDefaults()
@@ -73,11 +76,7 @@ class Main : JavaPlugin(), CommandExecutor {
                     embedBuilder.setImage(imageURL)
                     embedBuilder.addField("Statistics:", "TPS: $tpsLast10Secs, Last 5 minutes: $tpsLast5Mins\nCPU Usage Last Min: $usageLastMin%$msptString", false)
                     jda.getTextChannelById(chanId)?.sendMessageEmbeds(embedBuilder.build())?.queue()
-                } /*else {
-                    if (chanId != null && !embed) {
-                        jda.getTextChannelById(chanId)?.sendMessage("TPS: $tpsLast10Secs, $tpsLast5Mins\nCPU Usage: $usageLastMin$msptString")?.queue()
-                    }
-                }*/
+                }
             }
         }
 
