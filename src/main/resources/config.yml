@@ -14,3 +14,5 @@ embedTitle: "Stats"
 #explanatory
 imgURL: "https://png.pngtree.com/background/20230613/original/pngtree-digital-technology-background-with-dark-lines-and-lines-picture-image_3386207.jpg"
 #cant be over2000 chars long
+cmdNameForDiscord: "serverstats"
+#lowercaseonly

@@ -20,6 +20,7 @@ class DiscordListener: ListenerAdapter() {
         super.onSlashCommandInteraction(event)
         val spark = SparkProvider.get()
 
+        val cmdName = Main.plugin.config.getString("cmdNameForDiscord")
         val imageURL = Main.plugin.config.getString("imgURL")
         val embedCmd = Main.plugin.config.getBoolean("embedCmd")
         val embedTitle = Main.plugin.config.getString("embedTitle")
@@ -40,7 +41,7 @@ class DiscordListener: ListenerAdapter() {
             msptstring = "\nMsptMean Usage: $msptMean%\nmspt95Percentile: $mspt95Percentile%"
         }
 
-        if (embedCmd && event.name == "stats") {
+        if (embedCmd && event.name == cmdName) {
             embedBuilder.setTitle(embedTitle)
             embedBuilder.setColor(Color.BLACK)
             embedBuilder.setImage(imageURL)
@@ -48,7 +49,7 @@ class DiscordListener: ListenerAdapter() {
             event.channel.sendMessageEmbeds(embedBuilder.build()).queue()
 
         } else {
-                if (event.name == "stats" && !embedCmd) {
+                if (event.name == cmdName && !embedCmd) {
                 event.reply("TPS: $tpsLast10Secs, $tpsLast5Mins\nCPU Usage: $usagelastMin$msptstring").queue()
                 }
             }
@@ -56,9 +57,10 @@ class DiscordListener: ListenerAdapter() {
     }
 
     override fun onGuildReady(event: GuildReadyEvent) {
+        val cmdName = Main.plugin.config.getString("cmdNameForDiscord")
         val guild = event.guild
         guild.updateCommands()
-            .addCommands(Commands.slash("stats", "Shows the server stats."))
+            .addCommands(cmdName?.let { Commands.slash(it, "Shows the server stats.") })
             .queue();
     }
 

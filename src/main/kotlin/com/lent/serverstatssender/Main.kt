@@ -34,6 +34,7 @@ class Main : JavaPlugin(), CommandExecutor {
 
     override fun onEnable() {
         plugin = this
+        val cmdName = config.getString("cmdNameForDiscord")
         val repeat = config.getBoolean("repeat")
         val time = config.getInt("time").toLong()
         val spark = SparkProvider.get()
