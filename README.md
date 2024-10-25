@@ -22,13 +22,16 @@ If server doesnt support measurements, mtps will not work, the rest of the serve
 Default time is set to 10 mins for repeat function..
 
 
-
-- Now has access to change config to see if you want to allow the repeating of it sending to the channel, set to true or false. If false it will just be a /command: /tps
-![image](https://github.com/1lent/ServerStatsSender/assets/128602359/1abc4009-fea2-42b0-97dd-33352d84485b)
-![image](https://github.com/1lent/ServerStatsSender/assets/128602359/31e88e23-f2b2-41f0-a5b8-716e7df86fd0)
-
-
 REMASTER:
 
 Now with more config then ever to enhance the user experience
+Embed ✔️
+Img ✔️
+discordCustomCmd ✔️
+time ✔️
+customChannel ✔️
+Repeat ✔️
+
+and More!
+
 ![image](https://github.com/user-attachments/assets/d230486c-1d20-4843-9cbf-5caf2fa51efb)
