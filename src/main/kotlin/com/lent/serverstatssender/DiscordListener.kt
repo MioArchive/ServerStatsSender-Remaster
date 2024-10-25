@@ -30,7 +30,7 @@ class DiscordListener: ListenerAdapter() {
         val tpsLast10Secs = tps!!.poll(TicksPerSecond.SECONDS_10).roundToInt()
         val tpsLast5Mins = tps.poll(TicksPerSecond.MINUTES_5).roundToInt()
         val cpuUsage = spark.cpuSystem()
-        val usagelastMin = cpuUsage.poll(CpuUsage.MINUTES_1).roundToInt()
+        val usagelastMin = cpuUsage.poll(CpuUsage.MINUTES_1).roundToLong()
 
         val mspt = spark.mspt()
         var msptstring = ""
@@ -45,7 +45,7 @@ class DiscordListener: ListenerAdapter() {
             embedBuilder.setTitle(embedTitle)
             embedBuilder.setColor(Color.BLACK)
             embedBuilder.setImage(imageURL)
-            embedBuilder.addField("Statistics:", "TPS: $tpsLast10Secs, Last 5 minutes: $tpsLast5Mins\nCPU Usage: $usagelastMin%$msptstring", false)
+            embedBuilder.addField("Statistics:", "TPS: $tpsLast10Secs, Last 5 minutes: $tpsLast5Mins\nCPU Usage Last Min: $usagelastMin%$msptstring", false)
             event.channel.sendMessageEmbeds(embedBuilder.build()).queue()
 
         } else {
