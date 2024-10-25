@@ -1,0 +1,4 @@
+name: serverstatssender
+version: '1.0'
+main: com.lent.serverstatssender.Main
+api-version: '1.20'
