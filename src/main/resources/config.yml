@@ -7,5 +7,10 @@ time: 12000
 repeat: true
 #this is a boolean write false if you want to make it just a /command instead of repeating the send every so on ticks
 embed: true
+#embed to be enabled for normal repeat
 embedCmd: true
+#embed cmd is for embed to be enabled for cmd
 embedTitle: "Stats"
+#explanatory
+imgURL: "https://png.pngtree.com/background/20230613/original/pngtree-digital-technology-background-with-dark-lines-and-lines-picture-image_3386207.jpg"
+#cant be over2000 chars long
