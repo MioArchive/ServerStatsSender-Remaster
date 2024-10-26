@@ -60,21 +60,23 @@ class Main : JavaPlugin(), CommandExecutor {
         val embedTitle = plugin.config.getString("embedTitle")
         var embedBuilder = EmbedBuilder()
 
+
         scheduleTimer(time) {
             if (repeat) {
                 mspt?.poll(StatisticWindow.MillisPerTick.MINUTES_1)?.let { msptLastMin ->
-                    val msptMean = msptLastMin.percentile95th().roundToInt()
+                val msptMean = msptLastMin.percentile95th().roundToInt()
                     val mspt95Percentile = msptLastMin.percentile95th().roundToInt()
                     msptString = "\nMsptMean Usage: $msptMean\nmspt95Percentile: $mspt95Percentile"
                 }
                 config.options().copyDefaults()
                 saveDefaultConfig()
+                embedBuilder.setTitle(embedTitle)
+                embedBuilder.setColor(Color.BLACK)
+                embedBuilder.setImage(imageURL)
+                embedBuilder.clearFields()
+                embedBuilder.addField("Statistics:", "TPS: $tpsLast10Secs, Last 5 minutes: $tpsLast5Mins\nCPU Usage Last Min: $usageLastMin%$msptString", false)
                 val chanId = config.getString("chanid")
                 if (chanId != null && embed) {
-                    embedBuilder.setTitle(embedTitle)
-                    embedBuilder.setColor(Color.BLACK)
-                    embedBuilder.setImage(imageURL)
-                    embedBuilder.addField("Statistics:", "TPS: $tpsLast10Secs, Last 5 minutes: $tpsLast5Mins\nCPU Usage Last Min: $usageLastMin%$msptString", false)
                     jda.getTextChannelById(chanId)?.sendMessageEmbeds(embedBuilder.build())?.queue()
                 }
             }

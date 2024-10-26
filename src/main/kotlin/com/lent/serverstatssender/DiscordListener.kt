@@ -34,12 +34,7 @@ class DiscordListener: ListenerAdapter() {
 
         val mspt = spark.mspt()
         var msptstring = ""
-        if (mspt != null) {
-            val msptLastMin = mspt.poll(MillisPerTick.MINUTES_1)
-            val msptMean = msptLastMin.percentile95th().roundToInt()
-            val mspt95Percentile = msptLastMin.percentile95th().roundToInt()
-            msptstring = "\nMsptMean Usage: $msptMean%\nmspt95Percentile: $mspt95Percentile%"
-        }
+
 
         if (embedCmd && event.name == cmdName) {
             embedBuilder.setTitle(embedTitle)
