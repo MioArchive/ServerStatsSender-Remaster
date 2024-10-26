@@ -78,6 +78,10 @@ class Main : JavaPlugin(), CommandExecutor {
                 val chanId = config.getString("chanid")
                 if (chanId != null && embed) {
                     jda.getTextChannelById(chanId)?.sendMessageEmbeds(embedBuilder.build())?.queue()
+                } else {
+                    if (!embed && chanId != null) {
+                    jda.getTextChannelById(chanId)?.sendMessage("TPS: $tpsLast10Secs, Last 5 minutes: $tpsLast5Mins\nCPU Usage Last Min: $usageLastMin%$msptString")?.queue()
+                }
                 }
             }
         }

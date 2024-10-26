@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "2.1.0-Beta2"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+
 }
 
 group = "com.lent"
@@ -29,6 +30,14 @@ dependencies {
 val targetJavaVersion = 17
 kotlin {
     jvmToolchain(targetJavaVersion)
+}
+
+tasks {
+    shadowJar {
+        minimize() // Use minimization
+        destinationDirectory.set(file("output/dir"))
+        exclude("dependency.to.exclude")
+    }
 }
 
 tasks.build {

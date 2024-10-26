@@ -1,7 +1,10 @@
 package com.lent.serverstatssender
 
 import me.lucko.spark.api.SparkProvider
+import me.lucko.spark.api.statistic.StatisticWindow
 import me.lucko.spark.api.statistic.StatisticWindow.*
+import me.lucko.spark.api.statistic.misc.DoubleAverageInfo
+import me.lucko.spark.api.statistic.types.GenericStatistic
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
@@ -34,9 +37,13 @@ class DiscordListener: ListenerAdapter() {
 
         val mspt = spark.mspt()
         var msptstring = ""
+        mspt?.poll(MillisPerTick.MINUTES_1)?.let {
+            val mspt: GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick>? = spark.mspt()
 
+        }
 
         if (embedCmd && event.name == cmdName) {
+
             embedBuilder.setTitle(embedTitle)
             embedBuilder.setColor(Color.BLACK)
             embedBuilder.setImage(imageURL)
