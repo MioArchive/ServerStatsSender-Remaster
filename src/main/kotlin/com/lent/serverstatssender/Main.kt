@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
@@ -24,6 +25,8 @@ class Main : JavaPlugin(), CommandExecutor {
 
     override fun onEnable() {
         getCommand("sssreload")?.setExecutor(this)
+        getCommand("sssactivate")?.setExecutor(ActivateToken())
+
         plugin = this
         saveDefaultConfig()
         statsConfig = Config.load(this)
@@ -35,19 +38,21 @@ class Main : JavaPlugin(), CommandExecutor {
             else channel.sendMessage(infoField).queue()
         }
 
-        jda = JDABuilder.createDefault(statsConfig.token)
-            .setActivity(Activity.watching("your server stats"))
-            .addEventListeners(DiscordListener(this))
-            .build()
 
-        println("successfully started")
+        if (plugin.config.getString("token") == "") {
+            println("There is no token, please put bot token in config")
+            for (player in Bukkit.getOnlinePlayers()) {
+                if (player.hasPermission("sss.access")) {player.sendMessage("${ChatColor.RED}${ChatColor.BOLD}Attention! ${ChatColor.WHITE}" +
+                        "There is no token in Server stats sender config")}
+            }
+        }
     }
 
     fun onCommand(sender: CommandSender) {
         if (sender.hasPermission("sss.access")) {
             reloadConfig()
             statsConfig = Config.load(this)
-            sender.sendMessage("successfully reloaded config")
+            sender.sendMessage("${ChatColor.GREEN}${ChatColor.BOLD}Success! ${ChatColor.WHITE} SSS config reloaded")
         }
     }
 

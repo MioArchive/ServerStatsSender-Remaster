@@ -3,6 +3,7 @@ version: '1.0.1'
 main: com.lent.serverstatssender.Main
 api-version: '1.20'
 commands:
+  sssactivate:
   sssreload:
 depend:
   - spark
