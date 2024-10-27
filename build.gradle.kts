@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.lent"
-version = "1.0"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
@@ -21,7 +21,7 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("net.dv8tion:JDA:5.1.2") { // replace $version with the latest version
+    compileOnly("net.dv8tion:JDA:5.1.2") { // replace $version with the latest version
     compileOnly("me.lucko:spark-api:0.1-SNAPSHOT")
 
 
@@ -36,7 +36,8 @@ tasks {
     shadowJar {
         minimize() // Use minimization
         destinationDirectory.set(file("output/dir"))
-        exclude("dependency.to.exclude")
+        exclude("me.lucko:spark-api:0.1-SNAPSHOT")
+        exclude("net.dv8tion:JDA:5.1.2")
     }
 }
 

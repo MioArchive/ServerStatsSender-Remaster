@@ -3,8 +3,6 @@ package com.lent.serverstatssender
 import me.lucko.spark.api.SparkProvider
 import me.lucko.spark.api.statistic.StatisticWindow
 import me.lucko.spark.api.statistic.StatisticWindow.*
-import me.lucko.spark.api.statistic.misc.DoubleAverageInfo
-import me.lucko.spark.api.statistic.types.GenericStatistic
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
@@ -18,44 +16,39 @@ import kotlin.math.roundToLong
 //
 
 class DiscordListener: ListenerAdapter() {
-
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         super.onSlashCommandInteraction(event)
         val spark = SparkProvider.get()
-
         val cmdName = Main.plugin.config.getString("cmdNameForDiscord")
         val imageURL = Main.plugin.config.getString("imgURL")
         val embedCmd = Main.plugin.config.getBoolean("embedCmd")
         val embedTitle = Main.plugin.config.getString("embedTitle")
         val embedBuilder = EmbedBuilder()
-
         val tps = spark.tps()
         val tpsLast10Secs = tps!!.poll(TicksPerSecond.SECONDS_10).roundToInt()
         val tpsLast5Mins = tps.poll(TicksPerSecond.MINUTES_5).roundToInt()
         val cpuUsage = spark.cpuSystem()
         val usagelastMin = cpuUsage.poll(CpuUsage.MINUTES_1).roundToLong()
-
         val mspt = spark.mspt()
         var msptstring = ""
-        mspt?.poll(MillisPerTick.MINUTES_1)?.let {
-            val mspt: GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick>? = spark.mspt()
 
+        if (mspt != null) {
+            val msptLastMin = mspt.poll(MillisPerTick.MINUTES_1)
+            val msptMean = msptLastMin.percentile95th().roundToInt()
+            val mspt95Percentile = msptLastMin.percentile95th().roundToInt()
+            msptstring = "\nMsptMean Usage: $msptMean\nmspt95Percentile: $mspt95Percentile"
         }
-
         if (embedCmd && event.name == cmdName) {
-
             embedBuilder.setTitle(embedTitle)
             embedBuilder.setColor(Color.BLACK)
             embedBuilder.setImage(imageURL)
             embedBuilder.addField("Statistics:", "TPS: $tpsLast10Secs, Last 5 minutes: $tpsLast5Mins\nCPU Usage Last Min: $usagelastMin%$msptstring", false)
             event.channel.sendMessageEmbeds(embedBuilder.build()).queue()
-
         } else {
                 if (event.name == cmdName && !embedCmd) {
                 event.reply("TPS: $tpsLast10Secs, $tpsLast5Mins\nCPU Usage: $usagelastMin$msptstring").queue()
                 }
             }
-
     }
 
     override fun onGuildReady(event: GuildReadyEvent) {

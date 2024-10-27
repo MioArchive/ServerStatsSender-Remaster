@@ -63,10 +63,12 @@ class Main : JavaPlugin(), CommandExecutor {
 
         scheduleTimer(time) {
             if (repeat) {
-                mspt?.poll(StatisticWindow.MillisPerTick.MINUTES_1)?.let { msptLastMin ->
-                val msptMean = msptLastMin.percentile95th().roundToInt()
+                if (mspt != null) {
+                    mspt.poll(StatisticWindow.MillisPerTick.MINUTES_1)?.let { msptLastMin ->
+                    val msptMean = msptLastMin.percentile95th().roundToInt()
                     val mspt95Percentile = msptLastMin.percentile95th().roundToInt()
                     msptString = "\nMsptMean Usage: $msptMean\nmspt95Percentile: $mspt95Percentile"
+                    }
                 }
                 config.options().copyDefaults()
                 saveDefaultConfig()
