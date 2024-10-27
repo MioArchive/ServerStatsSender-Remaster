@@ -8,3 +8,4 @@ depend:
   - spark
 libraries:
   - net.dv8tion:JDA:5.1.2
+  - org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta2

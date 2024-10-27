@@ -15,8 +15,6 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
     compileOnly("net.dv8tion:JDA:5.1.2") {
     compileOnly("me.lucko:spark-api:0.1-SNAPSHOT")
     }
