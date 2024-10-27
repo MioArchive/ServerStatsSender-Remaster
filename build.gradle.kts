@@ -1,7 +1,5 @@
 plugins {
     kotlin("jvm") version "2.1.0-Beta2"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-
 }
 
 group = "com.lent"
@@ -15,9 +13,8 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
-    compileOnly("net.dv8tion:JDA:5.1.2") {
+    compileOnly("net.dv8tion:JDA:5.1.2")
     compileOnly("me.lucko:spark-api:0.1-SNAPSHOT")
-    }
 }
 
 kotlin {
@@ -25,14 +22,6 @@ kotlin {
 }
 
 tasks {
-    build {
-        dependsOn("shadowJar")
-    }
-
-    shadowJar {
-        minimize() // Use minimization
-    }
-
     processResources {
         val props = mapOf("version" to version)
         inputs.properties(props)
