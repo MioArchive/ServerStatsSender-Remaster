@@ -22,7 +22,7 @@ data class Config(
                 getBoolean("embed", false),
                 getBoolean("embedCmd", false),
                 getString("embedTitle", "")!!,
-                getString("imageURL", "")!!,
+                getString("imgURL", "")!!,
                 getString("cmdNameForDiscord", "")!!,
             )
         }

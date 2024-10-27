@@ -15,8 +15,10 @@ val spark = SparkProvider.get()
 fun getEmbed(config: Config) = EmbedBuilder()
     .setTitle(config.embedTitle)
     .setColor(Color.BLACK)
-    .setImage(config.imageURL)
     .addField("Statistics:", infoField, false)
+    .apply {
+        if (config.imageURL.isNotEmpty()) setImage(config.imageURL)
+    }
     .build()
 
 val infoField: String get() {
