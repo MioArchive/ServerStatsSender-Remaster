@@ -11,13 +11,14 @@ import org.bukkit.entity.Player
 import java.util.*
 
 class ActivateToken: CommandExecutor {
+
+    // /sssactivate <token> <channelID>
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
          lateinit var jda: JDA
         var config = plugin.config.getString("token")
         val tokenPLAYER = args[1]
-        val player = sender as Player
 
-        if (!player.hasPermission("sss.token") && !player.hasPermission("sss.acess")) return true
+        if (!sender.hasPermission("sss.token") && !sender.hasPermission("sss.acess")) return true
 
         if (args[0] != "activate") return true
         if (plugin.config.getString("token") == "") {
