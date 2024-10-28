@@ -1,36 +1,30 @@
 package com.lent.serverstatssender
 
 import com.lent.serverstatssender.Main.Companion.plugin
-import net.dv8tion.jda.api.JDA
-import net.dv8tion.jda.api.JDABuilder
-import net.dv8tion.jda.api.entities.Activity
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
-import java.util.*
 
 class ActivateToken: CommandExecutor {
 
+    private fun CommandSender.send(msg: String) = sendMessage(msg).let { true }
+
     // /sssactivate <token> <channelID>
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-         lateinit var jda: JDA
-        var config = plugin.config.getString("token")
-        val tokenPLAYER = args[1]
+        if (!sender.hasPermission("sss.token") && !sender.hasPermission("sss.access")) return true
+        if (args.size != 2) return sender.send("/sssactivate <token> <channelId>")
 
-        if (!sender.hasPermission("sss.token") && !sender.hasPermission("sss.acess")) return true
+        val (token, channelId) = args
 
-        if (args[0] != "activate") return true
-        if (plugin.config.getString("token") == "") {
-            plugin.config.set("token", tokenPLAYER)
-            plugin.saveConfig()
-            jda = JDABuilder.createDefault(plugin.statsConfig.token)
-                .setActivity(Activity.watching("your server stats"))
-                .addEventListeners(DiscordListener(Main()))
-                .build()
-            println("successfully started")
+        // TODO: Verify that bot token and channel look as expected
+
+        plugin.updateConfig {
+            set("token", token)
+            set("chanid", channelId)
         }
 
-    return true
+        plugin.activateBot(token)
+
+        return sender.send("Successfully activated the bot!")
     }
 }
