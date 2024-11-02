@@ -18,8 +18,8 @@ should look something like this:
 
 
 
-If server doesnt support measurements, mtps will not work, the rest of the servers stats will appear, Most servers support it!
-Default time is set to 10 mins for repeat function..
+If server doesn't support measurements, mtps will not work, the rest of the servers stats will appear, Most servers support it!
+Default time is set to 10 mins for repeat function.
 
 
 REMASTER:
@@ -35,3 +35,8 @@ Now with more config then ever to enhance the user experience
 and More!
 
 ![image](https://github.com/user-attachments/assets/d230486c-1d20-4843-9cbf-5caf2fa51efb)
+
+
+# Permissions:
+- "sss.access" this permission allows the user to have the onjoin notifier if the config of the plugin doesnt have channel id or a token in it. As well as the /sssreload command.
+- "sss.token" This permission allows the user to do the command /sssactivate token chanid

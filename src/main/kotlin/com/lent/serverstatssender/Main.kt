@@ -69,7 +69,7 @@ class Main : JavaPlugin(), CommandExecutor, Listener {
 
     @EventHandler
     fun onjoin(event: PlayerJoinEvent) {
-        if (!event.player.hasPermission("sss.activate") || !event.player.hasPermission("sss.token")) return
+        if (!event.player.hasPermission("sss.access") || !event.player.hasPermission("sss.token")) return
         if (isBotEnabled) return
         event.player.sendMessage("${ChatColor.RED}${ChatColor.BOLD}Attention! ${ChatColor.WHITE}" + "There is no token in Server Stats Sender config")
     }
