@@ -47,10 +47,9 @@ class Main : JavaPlugin(), CommandExecutor, Listener {
         } else {
             println("There is no token, please put bot token in config or use the command /sssactivate <token> <channelId>")
         }
-
         scheduleMethod()
-
         Bukkit.getPluginManager().registerEvents(this, this)
+        logger.info("Server Stats Sender v1.0.3 online!")
     }
 
 
