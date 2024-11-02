@@ -41,3 +41,6 @@ and More!
 # Permissions:
 - "sss.access" this permission allows the user to have the onjoin notifier if the config of the plugin doesnt have channel id or a token in it. As well as the /sssreload command.
 - "sss.token" This permission allows the user to do the command /sssactivate token chanid
+
+
+ps does need spark plugin installed.
