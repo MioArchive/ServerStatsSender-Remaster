@@ -46,3 +46,4 @@ and More!
 ps does need spark plugin installed.
 
 # https://discord.gg/ArCJjXvg
+# https://modrinth.com/plugin/server-stats-sender
