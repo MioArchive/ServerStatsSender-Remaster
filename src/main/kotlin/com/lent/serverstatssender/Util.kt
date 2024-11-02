@@ -47,7 +47,7 @@ val infoField: String get() {
 
     return """
         TPS (last 10s, 5m): 
-        > $tpsLast10Secs $tpsLast5Mins
+        > $tpsLast10Secs, $tpsLast5Mins
                 
         Mspt (mean usage, 95th percentile):
         > $msptMean, $mspt95Percentile
