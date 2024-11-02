@@ -17,6 +17,7 @@ class ActivateToken: CommandExecutor {
         val (token, channelId) = args
 
         // TODO: Verify that bot token and channel look as expected
+        if (token.length != 72 && channelId.length != 19) sender.send("Error occured.\n/sssactivate <token> <channelId>")
 
         plugin.updateConfig {
             set("token", token)
