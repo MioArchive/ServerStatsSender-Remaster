@@ -44,3 +44,5 @@ and More!
 
 
 ps does need spark plugin installed.
+
+# https://discord.gg/ArCJjXvg
