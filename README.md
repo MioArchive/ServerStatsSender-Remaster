@@ -13,7 +13,8 @@ go to config yml put in the channel id, and bot token and restart vuala.
 
 should look something like this:
 
-![image](https://github.com/user-attachments/assets/ae95ba03-ed34-4c5e-82b0-807bcbedb226)
+![image](https://github.com/user-attachments/assets/2f543640-beb3-4008-ab62-49a39d9cb1bd)
+
 
 
 
