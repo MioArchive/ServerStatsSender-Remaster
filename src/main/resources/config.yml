@@ -1,18 +1,27 @@
+# Discord Channel ID where the bot will send messages. Ensure the bot has permissions to send messages in this channel.
 chanid: ""
-#channel id for bot make sure has perms
+
+# Bot token for authenticating with Discord. Keep this secure and do not share it.
 token: ""
-#bot token duh
+
+# Time interval in ticks (1 second = 20 ticks). For example, 12000 ticks equals 10 minutes.
 time: 12000
-#in tics 12000 is 10 min
+
+# Set to true for messages to be sent automatically on a schedule, defined by 'time'. 
+# Set to false if messages should only be sent via command.
 repeat: true
-#this is a boolean write false if you want to make it just a /command instead of repeating the send every so on ticks
+
+# Enable or disable embedded messages for the scheduled (repeat) messages.
 embed: true
-#embed to be enabled for normal repeat
+
+# Enable or disable embedded messages when triggered by a command.
 embedCmd: true
-#embed cmd is for embed to be enabled for cmd
+
+# Title of the embed, shown at the top of the message.
 embedTitle: "Stats"
-#explanatory
+
+# URL for the image shown in the embed. Must be less than 2000 characters.
 imgURL: "https://png.pngtree.com/background/20230613/original/pngtree-digital-technology-background-with-dark-lines-and-lines-picture-image_3386207.jpg"
-#cant be over2000 chars long
+
+# Command name used to trigger the bot on Discord. Must be lowercase only.
 cmdNameForDiscord: "serverstats"
-#lowercaseonly

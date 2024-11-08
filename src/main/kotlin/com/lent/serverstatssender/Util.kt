@@ -1,5 +1,6 @@
 package com.lent.serverstatssender
 
+import com.lent.serverstatssender.manager.ConfigManager
 import me.lucko.spark.api.SparkProvider
 import me.lucko.spark.api.statistic.StatisticWindow
 import me.lucko.spark.api.statistic.StatisticWindow.TicksPerSecond
@@ -10,13 +11,11 @@ import net.dv8tion.jda.api.EmbedBuilder
 import org.bukkit.Bukkit
 import java.awt.Color
 import java.text.DecimalFormat
-import java.util.*
 import kotlin.math.roundToInt
-import kotlin.math.roundToLong
 
 val spark = SparkProvider.get()
 
-fun getEmbed(config: Config) = EmbedBuilder()
+fun getEmbed(config: ConfigManager) = EmbedBuilder()
     .setTitle(config.embedTitle)
     .setColor(Color.BLACK)
     .addField("Statistics:", infoField, false)
@@ -35,7 +34,7 @@ val infoField: String get() {
     val tpsLast5Mins = tps?.poll(TicksPerSecond.MINUTES_5)?.roundToInt() ?: 0
     val cpuUsage: DoubleStatistic<StatisticWindow.CpuUsage> = spark.cpuSystem()
     val usageLastMin = cpuUsage.poll(StatisticWindow.CpuUsage.MINUTES_1)
-    val cpuShit = usageLastMin * 100
+    val cpu = usageLastMin * 100
 
     val mspt: GenericStatistic<DoubleAverageInfo, StatisticWindow.MillisPerTick>? = spark.mspt()
     val msptpolled = mspt?.poll(StatisticWindow.MillisPerTick.MINUTES_1)
@@ -52,7 +51,7 @@ val infoField: String get() {
         Mspt (mean usage, 95th percentile):
         > $msptMean, $mspt95Percentile
         
-        CPU Usage Last Min: ${decimalFormatter.format(cpuShit)}%
+        CPU Usage Last Min: ${decimalFormatter.format(cpu)}%
         Playercount: $playercount
         MemoryUsage: $memUsed Mb
     """.trimIndent()

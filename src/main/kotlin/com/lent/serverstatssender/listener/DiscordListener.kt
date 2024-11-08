@@ -1,5 +1,8 @@
-package com.lent.serverstatssender
+package com.lent.serverstatssender.listener
 
+import com.lent.serverstatssender.Main
+import com.lent.serverstatssender.getEmbed
+import com.lent.serverstatssender.infoField
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter

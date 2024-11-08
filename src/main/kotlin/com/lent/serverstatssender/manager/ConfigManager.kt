@@ -1,6 +1,8 @@
-package com.lent.serverstatssender
+package com.lent.serverstatssender.manager
 
-data class Config(
+import com.lent.serverstatssender.Main
+
+data class ConfigManager(
     val chanid: String,
     val token: String,
     val timeIntervalTicks: Int,
@@ -14,7 +16,7 @@ data class Config(
 
     companion object {
         fun load(plugin: Main) = with(plugin.config) {
-            Config(
+            ConfigManager(
                 getString("chanid", "")!!,
                 getString("token", "")!!,
                 getInt("time"),

@@ -1,4 +1,4 @@
-package com.lent.serverstatssender
+package com.lent.serverstatssender.manager
 
 import com.lent.serverstatssender.Main.Companion.plugin
 import org.bukkit.command.Command

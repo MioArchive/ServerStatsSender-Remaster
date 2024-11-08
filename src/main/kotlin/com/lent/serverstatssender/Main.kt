@@ -1,5 +1,8 @@
 package com.lent.serverstatssender
 
+import com.lent.serverstatssender.listener.DiscordListener
+import com.lent.serverstatssender.manager.ActivateToken
+import com.lent.serverstatssender.manager.ConfigManager
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
@@ -12,14 +15,13 @@ import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitTask
 
 class Main : JavaPlugin(), CommandExecutor, Listener {
 
     lateinit var jda: JDA private set
-    lateinit var statsConfig: Config private set
+    lateinit var statsConfig: ConfigManager private set
 
     val isBotEnabled get() = ::jda.isInitialized
 
@@ -37,7 +39,13 @@ class Main : JavaPlugin(), CommandExecutor, Listener {
     override fun onEnable() {
         plugin = this
         saveDefaultConfig()
-        statsConfig = Config.load(this)
+        statsConfig = ConfigManager.load(this)
+
+        if (Bukkit.getPluginManager().getPlugin("spark") == null){
+            logger.warning("Spark not found, please install the newst spark version to run this Plugin!")
+        } else {
+            logger.info("Spark found, you plugin should be ready now!")
+        }
 
         getCommand("sssreload")?.setExecutor(this)
         getCommand("sssactivate")?.setExecutor(ActivateToken())
@@ -63,7 +71,7 @@ class Main : JavaPlugin(), CommandExecutor, Listener {
     fun updateConfig(changes: FileConfiguration.() -> Unit) {
         changes.invoke(config)
         saveConfig()
-        statsConfig = Config.load(this)
+        statsConfig = ConfigManager.load(this)
     }
 
     @EventHandler
@@ -86,7 +94,7 @@ class Main : JavaPlugin(), CommandExecutor, Listener {
         if (!sender.hasPermission("sss.access")) return true
         scheduleThingy?.cancel()
         reloadConfig()
-        statsConfig = Config.load(this)
+        statsConfig = ConfigManager.load(this)
         scheduleMethod()
         sender.sendMessage("${ChatColor.GREEN}${ChatColor.BOLD}Success! ${ChatColor.WHITE}Server Stats Bot config reloaded")
         return true
